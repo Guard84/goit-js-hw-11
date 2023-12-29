@@ -17,9 +17,11 @@ const loader = document.querySelector('.loader');
 
 fetchUsersBtn.addEventListener('submit', (event) => {
   event.preventDefault();
-  gallery.innerHTML = '';
-  loader.style.display = 'block';
   const usersValue = textInput.value;
+  gallery.innerHTML = '';
+
+  textInput.value = '';
+  loader.style.display = 'block';
 
   const searchParams = new URLSearchParams({
   key: '41485835-9295c11e9848689b047a2c35a',
@@ -43,7 +45,8 @@ fetchUsersBtn.addEventListener('submit', (event) => {
         iziToast.error({
           message: 'Sorry, there are no images matching your search query. Please try again!',
           messageColor: '#FAFAFB',
-          backgroundColor: '#EF4040'
+          backgroundColor: '#EF4040',
+          position: 'topRight'
         });
         return;
     };
