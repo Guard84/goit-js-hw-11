@@ -107,7 +107,6 @@
   display: block;
   width: 360px;
   height: 200px;
-  
 }
 
 .gallery > div:hover {
@@ -117,6 +116,7 @@
 .info {
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
   gap: 24px;
   padding-left: 10px;
   padding-right: 10px;
@@ -130,13 +130,13 @@
   font-family: Montserrat;
   font-size: 14px;
   font-weight: 700;
+  line-height: 1.5;
 }
 
 .image-value {
   color: #000;
-
-font-family: Montserrat;
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
 }
