@@ -18,8 +18,8 @@ const loader = document.querySelector('.loader');
 fetchUsersBtn.addEventListener('submit', (event) => {
   event.preventDefault();
   const usersValue = textInput.value;
-  gallery.innerHTML = '';
 
+  gallery.innerHTML = '';
   textInput.value = '';
   loader.style.display = 'block';
 
@@ -33,8 +33,8 @@ fetchUsersBtn.addEventListener('submit', (event) => {
 
   fetch(`https://pixabay.com/api/?${searchParams}`)
     .then((response) => {
-    loader.style.display = 'none';
-    
+      loader.style.display = 'none';
+      
       if (!response.ok) {
         throw new Error(response.status);
       }
@@ -49,40 +49,43 @@ fetchUsersBtn.addEventListener('submit', (event) => {
           position: 'topRight'
         });
         return;
-    };
-      data.hits.forEach(image => {
-        const card = imageCard(image);
-        gallery.appendChild(card);
-      });
+    }
+      const imagesHTML = data.hits.reduce((html, image) => {
+      return html + imageCard(image);
+      }, '');
     
-      modal.refresh();
+    gallery.innerHTML = imagesHTML;
+    modal.refresh();
+
     })
   .catch((error) => {
-		console.error(error);
+		  showAlert(error.toString());
   })
 });
 
-function imageCard(image) {
-  const card = document.createElement('div');
-
-  card.innerHTML = `
-    <a href="${image.largeImageURL}">
-    <img src="${image.webformatURL}" alt="${image.tags}"></a>
-    <div class="info">
-    <div class="image-info">
-    <span>Likes</span>
-    <span class="image-value">${image.likes}</span></div>
-    <div class="image-info">
-    <span>Views</span>
-    <span class="image-value">${image.views}</span></div>
-    <div class="image-info">
-    <span>Comments</span>
-    <span class="image-value">${image.comments}</span></div>
-    <div class="image-info">
-    <span>Downloads</span>
-    <span class="image-value">${image.downloads}</span></div>
-    </div>
+function imageCard(images) {
+  return `<li>
+      <a href="${images.largeImageURL}">
+        <img src="${images.webformatURL}" alt="${images.tags}">
+      </a>
+      <div class="info">
+        <div class="image-info">
+          <span>Likes</span>
+          <span class="image-value">${images.likes}</span>
+        </div>
+        <div class="image-info">
+          <span>Views</span>
+          <span class="image-value">${images.views}</span>
+        </div>
+        <div class="image-info">
+          <span>Comments</span>
+          <span class="image-value">${images.comments}</span>
+        </div>
+        <div class="image-info">
+          <span>Downloads</span>
+          <span class="image-value">${images.downloads}</span>
+        </div>
+      </div>
+    </li>
   `;
-
-  return card;
 };
